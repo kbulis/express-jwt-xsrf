@@ -1,0 +1,32 @@
+{
+  "name": "express-jwt-xsrf",
+  "version": "0.0.6",
+  "description": "Express filter for jwt parsing with anti-xsrf synchronizer.",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "repository": "https://github.com/kbulis/express-jwt-xsrf.git",
+  "author": "kirk.d.bulis@gmail.com",
+  "keywords": [
+    "express",
+    "jwt",
+    "xsrf",
+    "middleware"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo Nothing to test at this time..."
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.16.8",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/jsonwebtoken": "^7.2.5",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "jsonwebtoken": "^8.2.0",
+    "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}

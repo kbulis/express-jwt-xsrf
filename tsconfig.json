@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "outDir": "./build",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "sourceMap": true,
+    "strict": true,
+    "lib": [
+      "es6"
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "test"
+  ]
+}
