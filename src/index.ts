@@ -7,7 +7,8 @@ import * as express from 'express';
 /**
  * axsrfWithCors implementation.
  * 
- * ...
+ * Filter defined to accept cors and validate specified bearer token integrity
+ * according to the specified secret key and participating anti-xsrf cookie.
  * 
  * @author Kirk Bulis
  */
@@ -17,6 +18,7 @@ function axsrfWithCors(options: {
   allowOrigin?: string,
   jsonLimit?: number,
   identify: (res: express.Response, member?: any) => void,
+  debug?: boolean,
 }): express.RequestHandler[] {
   return [
     parsing.json({
@@ -33,11 +35,23 @@ function axsrfWithCors(options: {
       res.header('Access-Control-Allow-Credentials', 'true');
       res.header('Vary', 'Origin');
 
+      if (options.debug === true) {
+        console.log('~ adding cors headers');
+      }
+
       next();
     },
     (req: express.Request, res: express.Response, next: express.NextFunction) => {
+      if (options.debug === true) {
+        console.log('~ checking authorization token');
+      }
+
       try {
         let encoded = req.headers['authorization'] as string || '';
+
+        if (options.debug === true) {
+          console.log('~ authorization header value ' + encoded);
+        }
 
         if (encoded.length > 6 && encoded.substr(0, 6).toLowerCase() === 'bearer') {
           encoded = encoded.substr(7).trim();
@@ -52,6 +66,10 @@ function axsrfWithCors(options: {
         }
 
         if (encoded.length !== 0) {
+          if (options.debug === true) {
+            console.log('~ parsing token ' + encoded);
+          }
+
           try {
             let extracted: { axsrf: string, iat: number, exp: number } = {
               ...(jwtoken.verify(encoded, options.hashingSecretKey) as any),
@@ -64,6 +82,16 @@ function axsrfWithCors(options: {
                 next();
 
                 return;
+              }
+              else {
+                if (options.debug === true) {
+                  console.log('~ authorization token not matching axsrf cookie');
+                }                  
+              }
+            }
+            else {
+              if (options.debug === true) {
+                console.log('~ authorization token expired');
               }
             }
           }
