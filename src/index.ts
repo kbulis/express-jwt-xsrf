@@ -96,7 +96,9 @@ function axsrfWithCors(options: {
             }
           }
           catch (eX) {
-            console.log(eX);
+            if (options.debug === true) {
+              console.log(eX);
+            }
           }
         }
       }

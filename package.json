@@ -1,6 +1,6 @@
 {
   "name": "express-jwt-xsrf",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Express filter for jwt parsing with anti-xsrf synchronizer.",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
